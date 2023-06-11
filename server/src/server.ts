@@ -42,28 +42,17 @@ const generateSessionKey = () => {
     return sessionKey;
 }
 
-app.post("/api", async (req, res) => {
-    const send = (serverRes: ServerRes) => {
-        res.json(serverRes)
-    }
-
-    const { query } = req.body
-    if (query === "start") {
-        const sessionKey = generateSessionKey()
-        wsServer.on("connection", (socket) => {
-            users.set(sessionKey, new UserData(socket))
-            socket.on("message", response)
-            socket.on("close", () => users.delete(sessionKey))
-        })
-        const reply: ServerRes = {
-            type: "start",
-            content: {
-                sessionKey
-            }
+wsServer.on("connection", (socket) => {
+    const sessionKey = generateSessionKey()
+    users.set(sessionKey, new UserData(socket))
+    socket.on("message", response)
+    socket.on("close", () => users.delete(sessionKey))
+    socket.send(JSON.stringify({
+        type: "start",
+        content: {
+            sessionKey
         }
-        send(reply)
-        return
-    }
+    }))
 })
 
 const response = async (data: RawData) => {

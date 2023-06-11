@@ -73,25 +73,13 @@ const Game = () => {
             window.alert(serverRes.content.message)
             return
         }
-    }
-
-    const start = async () => {
-        const result = await fetch("http://147.182.165.5/api/", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ query: "start", content: null })
-        })
-        const data = await result.json() as ServerRes
-        if (data.type === "start") {
-            localStorage["sessionKey"] = data.content.sessionKey
-            connectWS(onServerRes)
+        if (serverRes.type === "start") {
+            localStorage["sessionKey"] = serverRes.content.sessionKey
         }
     }
-
+    
     useEffect(() => {
-        start()
+        connectWS(onServerRes)
     }, [])
 
     return (
