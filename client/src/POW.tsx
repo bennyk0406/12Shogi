@@ -31,13 +31,13 @@ const POW: React.FC<POWProps> = (props) => {
             <div css={css`
                 display: grid;
                 width: 260px;
-                height: 260px;
+                height: 380px;
                 gap: 20px;
                 padding-bottom: 20px;
                 grid-template-columns: 1fr 1fr;
                 grid-template-rows: 1fr 1fr 1fr;
             `}>
-                {props.POW.map((piece, order) => {
+                {props.POW.map((piece, order) => {  
                     const isSelected = props.selectedOrder === order
                     const action = props.team === 0 ? () => props.action(order) : () => { }
                     if (piece.name === "King") return <King team={props.team} selected={isSelected} action={action} />
