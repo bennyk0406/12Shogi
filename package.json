@@ -2,6 +2,7 @@
     "scripts": {
         "build": "cd client && npm run build && cd ..",
         "start": "ts-node server/src/server",
-        "dev": "npm run build && npm run start"
+        "dev": "npm run build && npm run start",
+        "set": "cd client && npm i && cd ../server && npm i && cd .."
     }
 }
