@@ -76,7 +76,7 @@ const Game = () => {
     }
 
     const start = async () => {
-        const result = await fetch("http://localhost/api/", {
+        const result = await fetch("http://147.182.165.5/api/", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
