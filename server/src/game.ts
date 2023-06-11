@@ -80,7 +80,7 @@ class Game {
 
     constructor() {
         this.board = new Board()
-        this.player = 0
+        this.player = Math.floor(Math.random() * 2) as 0 | 1
     }
 
     move(from: number, to: number) {
