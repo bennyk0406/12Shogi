@@ -93,7 +93,7 @@ const Game = () => {
                 flex-direction: column;
                 justify-content: flex-start;
             `}>
-                <POW POW={game.board.pow[1]} team={1} selectedOrder={selectedPOWOrder} action={clickPOWPiece} />
+                <POW game={game} POW={game.board.pow[1]} team={1} selectedOrder={selectedPOWOrder} action={clickPOWPiece} />
             </div>
             <div css={css`
                 display: grid;
@@ -112,7 +112,7 @@ const Game = () => {
                         if (cell.name === "Ja") return <Ja team={cell.team} pos={pos} selected={pos === selectedPos} action={() => { clickPiece(pos) }} />
                         if (cell.name === "Hoo") return <Hoo team={cell.team} pos={pos} selected={pos === selectedPos} action={() => { clickPiece(pos) }} />
                         return <Blank pos={pos} selected={pos === selectedPos} action={() => { clickPiece(pos) }} />
-                    }).map((element) =>
+                    }).map((element, pos) =>
                         <div css={css`
                             border: 1px solid black;
                             display: flex;
@@ -120,6 +120,7 @@ const Game = () => {
                             height: 100%;
                             padding: 10px;
                             box-sizing: border-box;
+                            background: ${0 <= pos && pos < 3 ? "rgb(170, 88, 72)" : (9 <= pos && pos < 12 ? "rgb(137, 159, 88)" : "rgb(224, 197, 142)")};
                         `}>
                             {element}
                         </div>
@@ -131,7 +132,7 @@ const Game = () => {
                 flex-direction: column;
                 justify-content: flex-end;
             `}>
-                <POW POW={game.board.pow[0]} team={0} selectedOrder={selectedPOWOrder} action={clickPOWPiece} />
+                <POW game={game} POW={game.board.pow[0]} team={0} selectedOrder={selectedPOWOrder} action={clickPOWPiece} />
             </div>
         </div>
     )

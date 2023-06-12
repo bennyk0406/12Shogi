@@ -1,12 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react"
-import { PieceType } from "./interface"
+import { Game, PieceType } from "./interface"
 import { King } from "./Piece/King"
 import { Sang } from "./Piece/Sang"
 import { Jang } from "./Piece/Jang"
 import { Ja } from "./Piece/Ja"
 
 interface POWProps {
+    game: Game
     POW: PieceType[]
     team: 0 | 1
     selectedOrder: number
@@ -39,7 +40,7 @@ const POW: React.FC<POWProps> = (props) => {
             `}>
                 {props.POW.map((piece, order) => {  
                     const isSelected = props.selectedOrder === order && piece.team === 0
-                    const action = props.team === 0 ? () => props.action(order) : () => { }
+                    const action = (props.team === 0 && props.game.player === 0) ? () => props.action(order) : () => { }
                     if (piece.name === "King") return <King team={props.team} selected={isSelected} action={action} />
                     if (piece.name === "Sang") return <Sang team={props.team} selected={isSelected} action={action} />
                     if (piece.name === "Jang") return <Jang team={props.team} selected={isSelected} action={action} />
