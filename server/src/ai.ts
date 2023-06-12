@@ -17,7 +17,7 @@ type Action = ActionMove | ActionPlaceDown | null
 class AlphaBeta {
     public readonly MAX = 1000
     public readonly MIN = -1000
-    public readonly threshold = 7
+    public readonly threshold = 9
     public board: Board
     public player: 0 | 1
     public enemy: 0 | 1
