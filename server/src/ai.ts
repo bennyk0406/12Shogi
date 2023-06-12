@@ -36,7 +36,7 @@ class AlphaBeta {
     }
 
     findMax(board: Board, alpha: number, beta: number, depth: number): [number, Action] {
-        if (depth >= this.threshold || board.isFinished().result) {
+        if (depth >= this.threshold || board.isFinished(this.player).result) {
             return [board.value(this.player), null]
         }
         
@@ -72,7 +72,7 @@ class AlphaBeta {
     }
 
     findMin(board: Board, alpha: number, beta: number, depth: number): [number, Action] {
-        if (depth >= this.threshold || board.isFinished().result) {
+        if (depth >= this.threshold || board.isFinished(this.enemy).result) {
             return [board.value(this.player), null]
         }
         

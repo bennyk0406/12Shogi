@@ -42,7 +42,7 @@ const generateSessionKey = () => {
     return sessionKey;
 }
 
-wsServer.on("connection", (socket) => {
+wsServer.on("connection", async (socket) => {
     const sessionKey = generateSessionKey()
     users.set(sessionKey, new UserData(socket))
     socket.on("message", response)
@@ -53,6 +53,25 @@ wsServer.on("connection", (socket) => {
             sessionKey
         }
     }))
+    const userData = users.get(sessionKey)
+    if (!userData) return
+    userData.socket.send(JSON.stringify({
+        type: "error",
+        content: {
+            message: `${userData.game.player === 1 ? "AI" : "당신"}부터 시작합니다`
+        }
+    }))
+    if (userData.game.player === 1) {
+        await userData.alphabeta.autoMove()
+        userData.game.nextTurn()
+        const reply: ServerRes = {
+            type: "gameData",
+            content: {
+                game: userData.game
+            }
+        }
+        userData.socket.send(JSON.stringify(reply))
+    }
 })
 
 const response = async (data: RawData) => {
@@ -89,7 +108,7 @@ const response = async (data: RawData) => {
     const nextTurn = async () => {
         game.nextTurn()
         sendGameData()
-        const finished = game.board.isFinished()
+        const finished = game.board.isFinished(game.player)
         if (finished.result) {
             if (finished.winner === 0) sendError("You win!")
             else sendError("You are defeated.")

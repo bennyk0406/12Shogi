@@ -282,11 +282,11 @@ class Board {
         return v
     }
 
-    isFinished(): {result: true, winner: 0 | 1} | {result: false} {
+    isFinished(player: 0 | 1): {result: true, winner: 0 | 1} | {result: false} {
         if (!this.cellList.some((cell) => cell instanceof KingPiece && cell.team === 0)) return {result: true, winner: 1}
         if (!this.cellList.some((cell) => cell instanceof KingPiece && cell.team === 1)) return {result: true, winner: 0}
-        if (this.cellList.slice(0, 3).some((cell) => cell instanceof KingPiece && cell.team === 0)) return {result: true, winner: 0}
-        if (this.cellList.slice(9, 12).some((cell) => cell instanceof KingPiece && cell.team === 1)) return {result: true, winner: 1}
+        if (player === 0 && this.cellList.slice(0, 3).some((cell) => cell instanceof KingPiece && cell.team === 0)) return {result: true, winner: 0}
+        if (player === 1 && this.cellList.slice(9, 12).some((cell) => cell instanceof KingPiece && cell.team === 1)) return {result: true, winner: 1}
         return {result: false}
     }
 }
